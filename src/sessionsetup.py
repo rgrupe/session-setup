@@ -1,22 +1,29 @@
 # SessionSetup.py
-# Robert Grupe, 2019-09-08
+# Contributors: Robert Grupe
+# Version: 2019-09-09
 
 import subprocess
 
-def check_versions():
-    nodeVersion = subprocess.Popen(['node', '-v'], 
+def this_platform():
+    # TODO https://stackoverflow.com/questions/110362/how-can-i-find-the-current-os-in-python
+    return
+
+def check_version (tool, command, option):
+    nodeVersion = subprocess.Popen([command, option], 
         stdout=subprocess.PIPE, 
         stderr=subprocess.STDOUT,
         universal_newlines=True)                  # Needed to strip off extra pre and post formatting characters
     stdout, stderr = nodeVersion.communicate()
     nodeVersion_status = nodeVersion.wait()
 
-    print('\n Currently installed Node.JS version is: ', stdout)
+    print('\n Currently installed', tool, 'version is: ', stdout)
     return
 
-check_versions()
+this_platform()
+check_version('Node.JS','node', '-v')
+check_version('nmp','npm', '-v')
 
-# TODO npmVersion = ["npm", "-v"]
+# TODO add test for function
 # TODO compare to latest published version
 # TODO Error Handling: install if missing to install -https://nodejs.org/en
 # TODO Update to latest version of npm and node.js
