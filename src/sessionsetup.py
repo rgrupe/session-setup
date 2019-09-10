@@ -1,29 +1,34 @@
-# SessionSetup.py
-# Contributors: Robert Grupe
-# Version: 2019-09-09
+""" SessionSetup.py: Automates the installation and updating of development tools after login.
+    Contributors: Robert Grupe
+    Version: 2019-09-09
+"""
 
+import platform
 import subprocess
 
-def this_platform():
-    # TODO https://stackoverflow.com/questions/110362/how-can-i-find-the-current-os-in-python
+def this_host():
+    """  Return host system operating system name. """
+    host_os = platform.system()
+    print('This platform OS is: ', host_os)
     return
 
 def check_version (tool, command, option):
-    nodeVersion = subprocess.Popen([command, option], 
+    """ Run OS shell command and return results. """
+    response = subprocess.Popen([command, option], 
         stdout=subprocess.PIPE, 
         stderr=subprocess.STDOUT,
         universal_newlines=True)                  # Needed to strip off extra pre and post formatting characters
-    stdout, stderr = nodeVersion.communicate()
-    nodeVersion_status = nodeVersion.wait()
+    stdout, stderr = response.communicate()
+    response_status = response.wait()
 
-    print('\n Currently installed', tool, 'version is: ', stdout)
+    print('Currently installed', tool, 'version: ', stdout)
     return
 
-this_platform()
+this_host()
 check_version('Node.JS','node', '-v')
 check_version('nmp','npm', '-v')
 
-# TODO add test for function
+# TODO add functions unit tests
 # TODO compare to latest published version
 # TODO Error Handling: install if missing to install -https://nodejs.org/en
 # TODO Update to latest version of npm and node.js
